@@ -42,6 +42,31 @@ class ArithmeticEncoding:
         encoder.append(stage_probs)
         return encoder, self.get_encoded_value(encoder)
 
+    def decode(self, encoded_msg, msg_length, probability_table):
+        decoder = []
+        decoded_msg = ""
+
+        stage_min = Decimal(0.0)
+        stage_max = Decimal(1.0)
+
+        for idx in range(msg_length):
+            stage_probs = self.process_stage(probability_table, stage_min, stage_max)
+
+            for msg_term, value in stage_probs.items():
+                if value[0] <= encoded_msg <= value[1]:
+                    break
+
+            decoded_msg = decoded_msg + msg_term
+            stage_min = stage_probs[msg_term][0]
+            stage_max = stage_probs[msg_term][1]
+
+            decoder.append(stage_probs)
+
+        stage_probs = self.process_stage(probability_table, stage_min, stage_max)
+        decoder.append(stage_probs)
+
+        return decoder, decoded_msg
+
 
 if __name__ == "__main__":
     probability_table = {'a': 0.5, 'b': 0.2, 'c': 0.3}
