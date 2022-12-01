@@ -74,4 +74,7 @@ if __name__ == "__main__":
     original_msg = "aaaacccbcabcabca"
 
     encoder, encoded_msg = AE.encode(msg=original_msg,probability_table=probability_table)
+    decoder, decoded_msg = AE.decode(encoded_msg=encoded_msg, probability_table=probability_table, msg_length=len(original_msg))
     print(f"Encoded Message: {encoded_msg}")
+    print(f"Decoded Message: {decoded_msg}")
+    print(f"Equal? -- {original_msg == decoded_msg}")

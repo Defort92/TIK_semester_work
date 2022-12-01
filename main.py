@@ -9,13 +9,13 @@ def full_lzw_compress(message):
 
     compressed = compress(code)
     print(compressed)
-    for i in range(len(compressed) - 1):
+    for i in range(len(compressed)):
         compressed[i] = from_decimal_to_binary(ord(str(compressed[i])), 10)
     return compressed
 
 
 def full_lzw_decompress(compressed):
-    for i in range(len(compressed) - 1):
+    for i in range(len(compressed)):
         compressed[i] = chr(from_binary_to_decimal(compressed[i]))
 
     decompressed = decompress(compressed)
